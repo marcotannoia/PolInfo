@@ -12,12 +12,7 @@ export default function Login() {
 
   async function gestioneLogin(event) {
     event.preventDefault();
-
-    const credenziali = {
-      email: email.trim(),
-      password
-    };
-
+    const credenziali = {email,password};
     try {
       const risposta = await fetch(
         `${URL_API}/api/autenticazione/login`,
@@ -39,7 +34,7 @@ export default function Login() {
       }
 
       alert('Accesso effettuato.');
-      naviga('/');
+      naviga('/area-personale');
     } catch {
       alert('Impossibile contattare il server.');
     }

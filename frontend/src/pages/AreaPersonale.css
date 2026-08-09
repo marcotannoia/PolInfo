@@ -1,0 +1,48 @@
+.pagina-area-personale {
+  min-height: 100vh;
+  padding: 70px 20px;
+
+  color: #0f172a;
+  background-color: #f8fafc;
+}
+
+.area-personale {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+
+  background-color: white;
+  border: 1px solid #008f83;
+  border-radius: 8px;
+}
+
+.area-personale h1 {
+  margin-bottom: 8px;
+  color: #008f83;
+}
+
+.area-personale__descrizione {
+  margin-bottom: 20px;
+  color: #64748b;
+}
+
+.area-personale__campo {
+  margin-top: 12px;
+  padding: 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.area-personale button {
+  margin-top: 20px;
+  padding: 10px 16px;
+
+  color: white;
+  background-color: #008f83;
+
+  border: none;
+  border-radius: 6px;
+
+  cursor: pointer;
+}

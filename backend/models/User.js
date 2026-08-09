@@ -1,6 +1,4 @@
 // costruire la struttura dei dati degli user
-
-
 const mongoose = require('mongoose'); // sarebbero gli import di python
 const bcrypt = require('bcrypt');
 

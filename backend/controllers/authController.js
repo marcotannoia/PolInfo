@@ -2,6 +2,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const axios = require('axios'); // serve per fare chiamate http
+
 exports.register = async (req, res) => {
   try {
     const { email, password } = req.body; 
@@ -35,11 +36,9 @@ exports.login = async (req, res) => {
   }
 };
 
-export async function verificaCineca(username, password) {
+async function verificaCineca(username, password) {
   const credenziali = `${username}:${password}`;
-  const authHeader =
-    'Basic ' +
-    Buffer.from(credenziali).toString('base64');
+  const authHeader ='Basic ' + Buffer.from(credenziali).toString('base64'); //li portiamo in base 64 come da documentaione
   const risposta = await axios.get(`${process.env.ESSE3_URL}/login`,
     {
       headers: {
@@ -50,27 +49,19 @@ export async function verificaCineca(username, password) {
 
   return risposta.data; 
 }
+exports.verificaCineca = verificaCineca;
 
 exports.loginCineca = async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    const datiCineca = await verificaCineca(
-      username,
-      password
-    );
-
+    const datiCineca = await verificaCineca(username,password);
     return res.status(200).json(datiCineca);
   } catch (error) {
-    return res
-      .status(error.response?.status || 500)
-      .json({
-        error: 'Credenziali Cineca non valide'
-      });
+    return res.json({error: 'Credenziali Cineca non valide'});
   }
 };
-//gestiamo adesso il cookie del consenso
 
+//gestiamo adesso il cookie del consenso
 exports.cookieConenso = async (req, res) => {
   res.cookie("consensoCookie", "accepted", {
     httpOnly: false, // deve accedere il frontend per cui non per forza protocllo http
@@ -80,4 +71,14 @@ exports.cookieConenso = async (req, res) => {
   });
 
   res.json({ message : "Consenso cookie salvato" });
+};
+
+exports.logout = async (req, res) => {
+  res.clearCookie('token', { //semplicemente elimino il cookie
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax'
+  });
+
+  return res.status(200).json({message: 'Logout effettuato'});
 };

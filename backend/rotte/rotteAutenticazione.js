@@ -18,6 +18,6 @@ router.get('/me', authMiddleware, (req, res) => { // rotta protetta, serve un to
 router.post('/login-cineca', authController.loginCineca);  // rotta esterna di cineca
 
 router.post('/cookie-consenso', authController.cookieConenso); // rotta per il consenso dei cookie./ tecnicamente lho inserito in auth controller per facilita di scrittura
+router.post('/logout', authController.logout); 
 // codice ma in realta anche gli utenti non loggati possono accedervi
-
 module.exports = router;

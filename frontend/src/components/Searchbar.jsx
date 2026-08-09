@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Searchbar.css';
+import { Search } from 'lucide-react';
 
 const URL_RICERCA =`${process.env.REACT_APP_API_URL}/api/esami/ricerca-esame`;
 
@@ -43,9 +44,11 @@ export default function SearchBar() {
   return (
     <div className="search-area">
       <form className="search-bar" onSubmit={gestisciRicerca}>
-        <span className="search-bar__icon" aria-hidden="true">
-          🔍
-        </span>
+        <Search
+          className="search-bar__icon"
+          size={30}
+          aria-hidden="true"
+        />
 
         <input
           type="text"

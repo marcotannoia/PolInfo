@@ -1,38 +1,27 @@
 // gli permetto di ricercalo 
 const Esame = require('../models/Esame');
-const axios = require('axios');
-import { loginCineca } from './authController';
+const {verificaCineca} = require('./authController');
 
 exports.aggiuntaRecensione = async (req, res) => {
     try {
         const { idEsame } = req.params;
         const {
-            usernameCineca,
+            usernameCineca, //prendiamo username e pw per poter fare la verifica del login
             passwordCineca,
             difficolta,
             tempo_di_studio_settimane,
             tempi_di_correzione,
             commento
         } = req.body;
-
         try {
-            await verificaCineca(
-                usernameCineca,
-                passwordCineca
-            );
+            await verificaCineca(usernameCineca,passwordCineca); // andiamo in auth controller
         } catch {
-            return res.status(401).json({
-                message: "Credenziali Cineca non valide"
-            });
+            return res.status(401).json({ message: "Credenziali Cineca non valide"});
         }
-
         const userId = req.user.id;
-
         const esameAggiornato =
-            await Esame.findByIdAndUpdate(
-                idEsame,
-                {
-                    $push: {
+            await Esame.findByIdAndUpdate(idEsame,
+                    {$push: {
                         recensioni: {
                             userId,
                             difficolta,
@@ -40,29 +29,14 @@ exports.aggiuntaRecensione = async (req, res) => {
                             tempi_di_correzione,
                             commento
                         }
-                    }
-                },
-                {
-                    new: true,
-                    runValidators: true
-                }
-            );
-
+                    }},
+                {new: true,runValidators: true}); // i validators ci permettono di non accettare recensioni che non abbiano tutti icampi
         if (!esameAggiornato) {
-            return res.status(404).json({
-                message: "Esame non trovato"
-            });
+            return res.status(404).json({message: "Esame non trovato"});
         }
-
-        return res.status(200).json({
-            message: "Recensione inserita con successo",
-            esame: esameAggiornato
-        });
+        return res.status(200).json({message: "Recensione inserita con successo",esame: esameAggiornato});
     } catch {
-        return res.status(500).json({
-            message:
-                "Errore durante l'inserimento della recensione"
-        });
+        return res.status(500).json({message:"Errore durante l'inserimento della recensione"});
     }
 };
 
@@ -71,9 +45,7 @@ exports.ricercaEsame = async (req, res) => {
         const nome = req.query.nome?.trim();
 
         if (!nome) {
-            return res.status(400).json({
-                message: "Inserire un esame"
-            });
+            return res.status(400).json({message: "Inserire un esame"});
         }
 
         const esame = await Esame

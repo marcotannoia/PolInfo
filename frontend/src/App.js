@@ -6,6 +6,7 @@ import Dettagli from './pages/Dettagli';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Registrazione from './pages/Registrazione';
+import AreaPersonale from './pages/AreaPersonale';
 function App() {
   return (
     <>
@@ -31,6 +32,10 @@ function App() {
     path="/sign-up"
     element={<Registrazione />}
   />
+  <Route 
+    path="/area-personale"
+    element={<AreaPersonale />}
+    />
 </Routes>
     </>
   );

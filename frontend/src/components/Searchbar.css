@@ -12,9 +12,6 @@
   border-radius: 8px;
 }
 
-.search-bar__icon {
-  padding-left: 12px;
-}
 
 .search-bar input {
   flex: 1;

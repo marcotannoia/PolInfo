@@ -1,6 +1,8 @@
 import SearchBar from '../components/Searchbar'
 import './Landing.css' 
+
 export  default function LandingPage() { 
+
     return ( 
         <main id="home" className="landing-page">
       <section className="hero">
