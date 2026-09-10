@@ -28,7 +28,7 @@ exports.login = async (req, res) => {
        httpOnly: true,
        secure: true,
        sameSite: 'none',
-       maxAge: 60*60*3
+       maxAge: 3 * 60 * 60 * 1000
     });
     res.json({ user: { id: user._id, email: user.email } }); //risposta: id user e email | ho tolto il token, lo carico dal middleware con il cookie 
   } catch (err) {
