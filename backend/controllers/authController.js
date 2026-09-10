@@ -18,17 +18,17 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body; 
     const user = await User.findOne({ email }); 
-    if (!user) return res.status(400).json({ error: "Utente non trovato" });// e vedo se esiste o meno
+    if (!user) return res.status(404).json({ error: "Utente non trovato" });// e vedo se esiste o meno
 
     const match_pw = await bcrypt.compare(password, user.password); 
     if (!match_pw) return res.status(400).json({ error: "Password errata" }); 
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' }); //creo il token che dura una sett, serve cookie parser per o per leggere i cookie ricevuti dal btowser, cioe la res
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '3h' }); //creo il token che dura una sett, serve cookie parser per o per leggere i cookie ricevuti dal btowser, cioe la res
     res.cookie('token', token, {
        httpOnly: true,
-       secure: false,
-       sameSite: 'lax',
-       maxAge: 7 * 24 * 60 * 60 * 1000
+       secure: true,
+       sameSite: 'none',
+       maxAge: 60*60*3
     });
     res.json({ user: { id: user._id, email: user.email } }); //risposta: id user e email | ho tolto il token, lo carico dal middleware con il cookie 
   } catch (err) {
@@ -64,9 +64,9 @@ exports.loginCineca = async (req, res) => {
 //gestiamo adesso il cookie del consenso
 exports.cookieConenso = async (req, res) => {
   res.cookie("consensoCookie", "accepted", {
-    httpOnly: false, // deve accedere il frontend per cui non per forza protocllo http
-    secure: false, // non serve https
-    sameSite: 'lax', // per evitare problemi di cors
+    httpOnly: true, 
+    secure: true,
+    sameSite: 'lax', 
     maxAge: 365 * 24 * 60 * 60 * 1000 // un anno
   });
 
@@ -74,11 +74,12 @@ exports.cookieConenso = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-  res.clearCookie('token', { //semplicemente elimino il cookie
+  res.clearCookie('token', { 
     httpOnly: true,
-    secure: false,
-    sameSite: 'lax'
+    secure: true,
+    sameSite: 'none'
   });
 
   return res.status(200).json({message: 'Logout effettuato'});
 };
+
