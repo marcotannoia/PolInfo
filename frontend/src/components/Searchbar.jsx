@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Searchbar.css';
 import { Search } from 'lucide-react';
@@ -8,6 +8,7 @@ const URL_RICERCA =`${process.env.REACT_APP_API_URL}/api/esami/ricerca-esame`;
 export default function SearchBar() {
   const [testo, setTesto] = useState('');
   const naviga = useNavigate();
+  const [suggerimenti, setSuggerimenti] = useState([]);
 
   async function gestisciRicerca(event) {
     event.preventDefault()  ;
@@ -41,6 +42,17 @@ export default function SearchBar() {
     }
   }
 
+  useEffect(() => {
+    if(!testo.trim) {
+      setSuggerimenti([]);
+      return;
+    }
+    fetch(`${process.env.REACT_APP_API_URL}/api/esami/suggerimenti?nome=${encodeURIComponent(testo)}`)
+    .then((risposta) => risposta.json())
+    .then((dati) => setSuggerimenti(dati))
+    .catch(() => setSuggerimenti([]))
+  }, [testo]);
+
   return (
     <div className="search-area">
       <form className="search-bar" onSubmit={gestisciRicerca}>
@@ -55,7 +67,16 @@ export default function SearchBar() {
           value={testo}
           onChange={(event) => setTesto(event.target.value)}
           placeholder="Cerca un esame..."
+          list="elencoEsami"
         />
+
+        <datalist id="elencoEsami">
+          {
+            suggerimenti.map((e) =>(
+              <option key={e.id} value={e.nome}/>
+            ))
+          }
+        </datalist>
 
         <button type="submit">
           Cerca

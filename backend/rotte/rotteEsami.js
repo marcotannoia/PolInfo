@@ -10,5 +10,7 @@ router.post('/:idEsame/recensione', authMiddleware, ControllerEsame.aggiuntaRece
 
 router.post('/aggiungi', authMiddleware, adminMiddleware, ControllerEsame.inserimentoEsame);
 
+router.get('/suggerimenti', ControllerEsame.suggerimentiEsami);
+
 
 module.exports = router;
