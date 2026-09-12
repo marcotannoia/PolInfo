@@ -35,10 +35,10 @@ export default function AreaPersonale() {
               recensioni.map((e) => (
                 <article key={e.id}>
                   <h3>{e.esame}</h3>
-                  <p>Difficoltà: {e.difficolta}</p>
-                  <p>Tempo di Studio in settimane: {e.tempo_di_studio_settimane}</p>
-                  <p>Tempi di correzione: {e.tempi_di_correzione}</p>
-                  <p>Commento: {e.commento}</p>
+                  <p>Difficoltà: {e.recensione.difficolta}</p>
+                  <p>Tempo di Studio in settimane: {e.recensione.tempo_di_studio_settimane}</p>
+                  <p>Tempi di correzione: {e.recensione.tempi_di_correzione}</p>
+                  <p>Commento: {e.recensione.commento}</p>
                 </article>
               ))
             )
