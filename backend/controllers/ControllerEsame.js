@@ -80,6 +80,9 @@ exports.inserimentoEsame  = async (req, res) => {
             descrizione,
             professore,
             corsoDiStudi, 
+            tempo_di_studio_settimane,
+            tempi_di_correzione,
+            difficolta,
             recensioni: [] 
         });
 
