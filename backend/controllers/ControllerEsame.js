@@ -108,7 +108,7 @@ exports.mieRecensioni = async(req, res) => {
         const esami = await Esame.find({'recensioni.userId' : req.user.id}); // esami a cui l'utente ha lasciato almeno una recensione
         const recensioni = [];
         for(const esame of esami){ // scorro tra gli esami trovati
-            for(const recensione of esame.recensione){ // scorro tra le recensioni
+            for(const recensione of esame.recensioni){ // scorro tra le recensioni
                 if(recensione.userId.toString() === req.user.id){ // verifico la correttezza dell'id
                     recensioni.push({esame : esame.nome, recensione : recensione})
                 }
@@ -116,7 +116,7 @@ exports.mieRecensioni = async(req, res) => {
         }
         res.json(recensioni);
     }catch{
-        req.status(500).json('Errore generico di Server')
+        res.status(500).json('Errore generico di Server')
     }
 
 }

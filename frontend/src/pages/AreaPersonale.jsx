@@ -32,7 +32,7 @@ export default function AreaPersonale() {
           <h2>Le mie recensioni</h2>
           {
             recensioni.length === 0 ? (<p>Non hai ancora recensioni inserite</p>) : (
-              recensioni.map((e) => {
+              recensioni.map((e) => (
                 <article key={e.id}>
                   <h3>{e.esame}</h3>
                   <p>Difficoltà: {e.difficolta}</p>
@@ -40,7 +40,7 @@ export default function AreaPersonale() {
                   <p>Tempi di correzione: {e.tempi_di_correzione}</p>
                   <p>Commento: {e.commento}</p>
                 </article>
-              })
+              ))
             )
           }
         </section>
