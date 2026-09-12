@@ -43,7 +43,7 @@ export default function SearchBar() {
   }
 
   useEffect(() => {
-    if(!testo.trim) {
+    if(!testo.trim()) {
       setSuggerimenti([]);
       return;
     }

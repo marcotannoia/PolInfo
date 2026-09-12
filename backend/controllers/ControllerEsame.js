@@ -96,8 +96,11 @@ exports.inserimentoEsame  = async (req, res) => {
 exports.suggerimentiEsami = async(req, res) => {
     const nome = req.query.nome.trim();
     if (!nome) res.json([]);
-    const esami = await Esame.find().filter((esame) => esame.nome.toLowerCase().includes(nome.toLowerCase()));
-    res.json(esami);
+    const esami = await Esame.find();
+    const esamiFiltrati = esami.filter((esame) => 
+        esame.nome.toLowerCase().includes(nome.toLowerCase())
+    );
+    res.json(esamiFiltrati);
 }
 
 exports.mieRecensioni = async(req, res) => {
