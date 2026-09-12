@@ -6,6 +6,8 @@ const adminMiddleware = require('../controllers/adminMiddleware');
 
 router.get('/ricerca-esame', ControllerEsame.ricercaEsame);
 
+router.get('/mie-recensioni', authMiddleware, ControllerEsame.mieRecensioni);
+
 router.post('/:idEsame/recensione', authMiddleware, ControllerEsame.aggiuntaRecensione);
 
 router.post('/aggiungi', authMiddleware, adminMiddleware, ControllerEsame.inserimentoEsame);
