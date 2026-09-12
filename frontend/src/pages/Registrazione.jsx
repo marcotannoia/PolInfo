@@ -9,11 +9,11 @@ export default function Registrazione() {
     const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState('');
 
-    function gestisciRegistrazione(e) { 
+    async function gestisciRegistrazione(e) { 
         e.preventDefault(); 
 
         try { 
-            const risposta = fetch(`${URL_API}/api/autenticazione/registrazione`, {
+            const risposta = await fetch(`${URL_API}/api/autenticazione/registrazione`, {
               method : 'POST',
               headers : { 
                 'Content-Type' : 'application/json'
@@ -22,7 +22,7 @@ export default function Registrazione() {
                 email, password
               })
               });
-            const dati = risposta.json(); 
+            const dati = await risposta.json(); 
 
             if (!risposta.ok) {
                 alert(dati.error);
