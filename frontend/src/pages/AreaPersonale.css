@@ -48,7 +48,5 @@
 }
 
 #commento>p{
-  display: block;
-  width: 90%;
-  justify-content: end;
+  margin-left: 10%;
 }
