@@ -38,7 +38,7 @@ export default function AreaPersonale() {
                   <p><b>Difficoltà:</b> {e.recensione.difficolta}</p>
                   <p><b>Tempo di Studio in settimane:</b> {e.recensione.tempo_di_studio_settimane}</p>
                   <p><b>Tempi di correzione:</b> {e.recensione.tempi_di_correzione} giorni</p>
-                  <p><b>Commento:</b>  <p style="width=80% margin-left=0">{e.recensione.commento}</p></p>
+                  <p id="commento"><b>Commento:</b>  <p>{e.recensione.commento}</p></p>
                 </article>
               ))
             )

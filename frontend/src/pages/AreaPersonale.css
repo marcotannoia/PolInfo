@@ -46,3 +46,9 @@
 
   cursor: pointer;
 }
+
+#commento>p{
+  display: block;
+  width: 90%;
+  justify-content: end;
+}
