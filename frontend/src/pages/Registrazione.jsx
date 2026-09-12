@@ -13,16 +13,24 @@ export default function Registrazione() {
         e.preventDefault(); 
 
         try { 
-            const risposta = fetch(`${URL_API}/api/autenticazione/login`);
+            const risposta = fetch(`${URL_API}/api/autenticazione/registrazione`, {
+              method : 'POST',
+              headers : { 
+                'Content-Type' : 'application/json'
+                }, 
+              body : JSON.stringify({
+                email, password
+              })
+              });
             const dati = risposta.json(); 
 
             if (!risposta.ok) {
-                 alert(dati.error);
-                 return;
-             }
+                alert(dati.error);
+                return;
+            }
 
         alert('Registrazione effettuata.');
-         naviga('/');
+        naviga('/');
 
         } catch  (err) { 
             alert('Impossibile contattare il server.');
