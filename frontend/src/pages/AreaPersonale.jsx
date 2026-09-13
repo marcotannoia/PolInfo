@@ -13,11 +13,27 @@ export default function AreaPersonale() {
         } 
     }
     useEffect(() => {
-      fetch(`${process.env.REACT_APP_API_URL}/api/esami/mie-recensioni`, {credentials:'include'})
-      .then((risposta) => risposta.json())
-      .then((dati) => setRecensioni(dati))
-      .catch(() => setRecensioni([]));
-    }, []);
+      async function caricaRecensioni() {
+        try {
+          const risposta = await fetch(
+            `${process.env.REACT_APP_API_URL}/api/esami/mie-recensioni`,
+            {credentials: 'include'}
+          );
+
+          if (!risposta.ok) {
+            naviga('/login');
+            return;
+          }
+
+          const dati = await risposta.json();
+          setRecensioni(dati);
+        } catch {
+          setRecensioni([]);
+        }
+      }
+
+      caricaRecensioni();
+    }, [naviga]);
 
     return (
         <main className="pagina-area-personale">
@@ -58,7 +74,8 @@ export default function AreaPersonale() {
                   {e.recensione.commento}
                 </p>
               </article>
-              )))
+              ))
+            )
           }
         </section>
 

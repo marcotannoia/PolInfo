@@ -7,8 +7,8 @@ exports.register = async (req, res) => {
   try {
     const { email, password } = req.body; 
     const newUser = new User({ email, password, ruolo: "user"}); // lo user non puo scegliere se essere admin
-    await newUser.save(); // aspetto il salvataggio dell utente
-    res.status(201).json({ messaggio: "Utente registrato" }); // e vedo se tutto e andato bene o no
+    await newUser.save();
+    res.status(201).json({ messaggio: "Utente registrato" });
   } catch (err) {
     res.status(500).json({ error: "Errore, riprovare" });
   }
@@ -23,7 +23,7 @@ exports.login = async (req, res) => {
     const match_pw = await bcrypt.compare(password, user.password); 
     if (!match_pw) return res.status(400).json({ error: "Password errata" }); 
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '3h' }); //creo il token che dura una sett, serve cookie parser per o per leggere i cookie ricevuti dal btowser, cioe la res
+    const token = jwt.sign({ id: user._id , ruolo : user.ruolo }, process.env.JWT_SECRET, { expiresIn: '3h' }); //creo il token che dura una sett, serve cookie parser per o per leggere i cookie ricevuti dal btowser, cioe la res
     res.cookie('token', token, {
        httpOnly: true,
        secure: true,
@@ -38,7 +38,7 @@ exports.login = async (req, res) => {
 
 async function verificaCineca(username, password) {
   const credenziali = `${username}:${password}`;
-  const authHeader ='Basic ' + Buffer.from(credenziali).toString('base64'); //li portiamo in base 64 come da documentaione
+  const authHeader ='Basic ' + Buffer.from(credenziali).toString('base64'); // le credenziali viaggiano in base 64
   const risposta = await axios.get(`${process.env.ESSE3_URL}/login`,
     {
       headers: {
@@ -61,7 +61,7 @@ exports.loginCineca = async (req, res) => {
   }
 };
 
-//gestiamo adesso il cookie del consenso
+// questo cookie è inutilizzato ma se vogliamo mettere altre cose ci serve per prendere il consenso e tenerlo per un anno
 exports.cookieConenso = async (req, res) => {
   res.cookie("consensoCookie", "accepted", {
     httpOnly: true, 

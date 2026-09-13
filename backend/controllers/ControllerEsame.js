@@ -1,12 +1,12 @@
 // gli permetto di ricercalo 
 const Esame = require('../models/Esame');
 const {verificaCineca} = require('./authController');
-
+//--
 exports.aggiuntaRecensione = async (req, res) => {
     try {
-        const { idEsame } = req.params;
+        const {idEsame} = req.params;
         const {
-            usernameCineca, //prendiamo username e pw per poter fare la verifica del login
+            usernameCineca, 
             passwordCineca,
             difficolta,
             tempo_di_studio_settimane,
@@ -39,7 +39,7 @@ exports.aggiuntaRecensione = async (req, res) => {
         return res.status(500).json({message:"Errore durante l'inserimento della recensione"});
     }
 };
-
+//---
 exports.ricercaEsame = async (req, res) => {
     try {
         const nome = req.query.nome?.trim();
@@ -68,12 +68,12 @@ exports.ricercaEsame = async (req, res) => {
         });
     }
 };
-
+//--
 
 // SOLO PER ADMIN
 exports.inserimentoEsame  = async (req, res) => {
     try {
-        const { nome, descrizione, professore, corsoDiStudi } = req.body; 
+        const { nome, descrizione, professore, corsoDiStudi , tempo_di_studio_settimane,  tempi_di_correzione, difficolta} = req.body; 
         
         const nuovoEsame = new Esame({
             nome,
@@ -94,13 +94,13 @@ exports.inserimentoEsame  = async (req, res) => {
 };
 
 exports.suggerimentiEsami = async(req, res) => {
-    const nome = req.query.nome.trim();
-    if (!nome) res.json([]);
+    const nome = req.query.nome?.trim();
+    if (!nome) { return res.json([]); }
     const esami = await Esame.find();
     const esamiFiltrati = esami.filter((esame) => 
         esame.nome.toLowerCase().includes(nome.toLowerCase())
     );
-    res.json(esamiFiltrati);
+   return res.json(esamiFiltrati);
 }
 
 exports.mieRecensioni = async(req, res) => {

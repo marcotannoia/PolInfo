@@ -61,3 +61,35 @@
   font-size: 18px;
   line-height: 1.6;
 }
+.form-esame {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: min(600px, 100%);
+  margin-top: 30px;
+  padding: 20px;
+
+  background-color: white;
+  border: 1px solid #008f83;
+  border-radius: 8px;
+}
+
+.form-esame input {
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.form-esame button {
+  padding: 10px;
+  color: white;
+  background-color: #008f83;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form-esame button:hover {
+  background-color: #00766c;
+}
