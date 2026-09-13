@@ -2,10 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   min-height: 100vh;
   padding: 20px;
-
   color: #0f172a;
   background-color: #f8fafc;
 }
@@ -14,7 +12,6 @@
   width: 100%;
   max-width: 380px;
   padding: 24px;
-
   background-color: white;
   border: 1px solid #008f83;
   border-radius: 8px;
@@ -42,7 +39,6 @@
 
 .login input {
   padding: 10px;
-
   border: 1px solid #cbd5e1;
   border-radius: 6px;
 }
@@ -50,13 +46,10 @@
 .login button {
   margin-top: 8px;
   padding: 10px;
-
   color: white;
   background-color: #008f83;
-
   border: none;
   border-radius: 6px;
-
   cursor: pointer;
 }
 
