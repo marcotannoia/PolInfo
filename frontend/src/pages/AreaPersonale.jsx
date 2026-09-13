@@ -33,15 +33,32 @@ export default function AreaPersonale() {
           {
             recensioni.length === 0 ? (<p>Non hai ancora recensioni inserite</p>) : (
               recensioni.map((e) => (
-                <article key={e.id}>
-                  <h3>{e.esame}</h3>
-                  <p><b>Difficoltà:</b> {e.recensione.difficolta}</p>
-                  <p><b>Tempo di Studio in settimane:</b> {e.recensione.tempo_di_studio_settimane}</p>
-                  <p><b>Tempi di correzione:</b> {e.recensione.tempi_di_correzione} giorni</p>
-                  <p id="commento"><b>Commento:</b>  <p>{e.recensione.commento}</p></p>
-                </article>
-              ))
-            )
+              <article
+                className="e.recensione"
+                key={e.recensione._id}
+              >
+                <h3>{e.esame}</h3>
+                <p>
+                  <strong>Difficoltà:</strong>{' '}
+                  {e.recensione.difficolta}/5
+                </p>
+
+                <p>
+                  <strong>Tempo di studio:</strong>{' '}
+                  {e.recensione.tempo_di_studio_settimane} settimane
+                </p>
+
+                <p>
+                  <strong>Tempo di correzione:</strong>{' '}
+                  {e.recensione.tempi_di_correzione} giorni
+                </p>
+
+                <p>
+                  <strong>Commento:</strong>{' '}
+                  {e.recensione.commento}
+                </p>
+              </article>
+              )))
           }
         </section>
 
