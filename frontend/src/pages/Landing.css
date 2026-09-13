@@ -5,18 +5,7 @@
 
   color: #0f172a;
 
-  background:
-    radial-gradient(
-      circle at 20% 20%,
-      rgba(59, 130, 246, 0.16),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 80% 80%,
-      rgba(14, 165, 233, 0.12),
-      transparent 30%
-    ),
-    #f8fafc;
+  background: #f8fafc;
 }
 
 .hero {
