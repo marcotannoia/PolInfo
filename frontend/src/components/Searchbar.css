@@ -1,4 +1,5 @@
 .search-area {
+  position: relative;
   width: min(600px, 100%);
   margin-top: 30px;
 }
@@ -37,4 +38,31 @@
 
 .search-bar button:hover {
   background-color: #00766c;
+}
+
+.elenco-suggerimenti {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  margin-top: 4px;
+  background-color: white;
+  border: 1px solid #008f83;
+  border-radius: 8px;
+}
+
+.elenco-suggerimenti button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  text-align: left;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.elenco-suggerimenti button:hover {
+  background-color: #eef8f7;
 }

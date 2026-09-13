@@ -67,21 +67,26 @@ export default function SearchBar() {
           value={testo}
           onChange={(event) => setTesto(event.target.value)}
           placeholder="Cerca un esame..."
-          list="elencoEsami"
         />
-
-        <datalist id="elencoEsami">
-          {
-            suggerimenti.map((e) =>(
-              <option key={e.id} value={e.nome}/>
-            ))
-          }
-        </datalist>
 
         <button type="submit">
           Cerca
         </button>
       </form>
+
+      {suggerimenti.length > 0 && (
+        <div className="elenco-suggerimenti">
+          {suggerimenti.map((e) => (
+            <button
+              type="button"
+              key={e._id}
+              onClick={() => naviga('/dettagli', { state: { esame: e } })}
+            >
+              {e.nome}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

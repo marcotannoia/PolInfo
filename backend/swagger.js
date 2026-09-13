@@ -7,7 +7,7 @@ const documentazioneSwagger = {
     title: 'API PolInfo',
     version: '1.0.0',
     description:
-      'API REST per la consultazione degli esami universitari.'
+      'API REST per informazioni su esami universitari.'
   },
 
   servers: [
@@ -31,7 +31,7 @@ const documentazioneSwagger = {
     }
   ],
 
-  components: { // CHIEDERE
+  components: { // schema di auth 
     securitySchemes: {
       cookieAuth: {
         type: 'apiKey',
@@ -86,7 +86,7 @@ const documentazioneSwagger = {
           email: {
             type: 'string',
             format: 'email',
-            example: 'studente@gmail.com'
+            example: 'emailacaso@gmail.com'
           }
         }
       },
@@ -118,7 +118,7 @@ const documentazioneSwagger = {
           },
           commento: {
             type: 'string',
-            example: 'Esame impegnativo, ma il materiale è sufficiente.'
+            example: 'Esame impegnativo ma il materiale è sufficiente.'
           },
           createdAt: {
             type: 'string',
@@ -169,7 +169,7 @@ const documentazioneSwagger = {
           },
           commento: {
             type: 'string',
-            example: 'Esame impegnativo, ma interessante.'
+            example: 'Esame impegnativo ma interessante.'
           }
         }
       },
@@ -191,7 +191,7 @@ const documentazioneSwagger = {
           },
           professore: {
             type: 'string',
-            example: 'Mario Rossi'
+            example: 'Prof. Vannella'
           },
           corsoDiStudi: {
             type: 'string',
@@ -295,7 +295,7 @@ const documentazioneSwagger = {
         tags: ['Autenticazione'],
         summary: 'Effettua il login',
         description:
-          'Se le credenziali sono corrette, il server salva il token JWT nel cookie HTTP-only chiamato token.',
+          'Se le credenziali sono corrette il server salva il token nel cookie HTTP-only chiamato token',
         requestBody: {
           required: true,
           content: {
@@ -311,7 +311,7 @@ const documentazioneSwagger = {
             description: 'Login effettuato',
             headers: {
               'Set-Cookie': {
-                description: 'Cookie contenente il token JWT',
+                description: 'Cookie contenente il token',
                 schema: {
                   type: 'string',
                   example: 'token=eyJhbGciOiJIUzI1Ni...; HttpOnly; Secure'
@@ -508,7 +508,7 @@ const documentazioneSwagger = {
             name: 'idEsame',
             in: 'path',
             required: true,
-            description: 'Identificativo MongoDB dell’esame',
+            description: 'id MongoDB dell’esame',
             schema: {
               type: 'string'
             },
