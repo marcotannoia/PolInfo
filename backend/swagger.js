@@ -492,6 +492,86 @@ const documentazioneSwagger = {
       }
     },
 
+    '/api/esami/suggerimenti': {
+      get: {
+        tags: ['Esami'],
+        summary: 'Restituisce suggerimenti di esami per nome',
+        parameters: [
+          {
+            name: 'nome',
+            in: 'query',
+            required: false,
+            description:
+              'Testo da cercare nel nome dell’esame. Se assente o vuoto, restituisce un array vuoto.',
+            schema: {
+              type: 'string'
+            },
+            example: 'Analisi'
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Elenco degli esami compatibili',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/components/schemas/Esame'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    '/api/esami/mie-recensioni': {
+      get: {
+        tags: ['Recensioni'],
+        summary: 'Recupera le recensioni dell’utente autenticato',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Recensioni pubblicate dall’utente',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      esame: {
+                        type: 'string',
+                        example: 'Analisi Matematica 1'
+                      },
+                      recensione: {
+                        $ref: '#/components/schemas/Recensione'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          400: {
+            description: 'Token non valido'
+          },
+          401: {
+            description: 'Utente non autenticato'
+          },
+          500: {
+            description: 'Errore interno del server'
+          }
+        }
+      }
+    },
+
     '/api/esami/{idEsame}/recensione': {
       post: {
         tags: ['Recensioni'],
