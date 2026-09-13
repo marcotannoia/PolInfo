@@ -34,7 +34,7 @@ export default function AreaPersonale() {
             recensioni.length === 0 ? (<p>Non hai ancora recensioni inserite</p>) : (
               recensioni.map((e) => (
               <article
-                className="e.recensione"
+                className="recensione"
                 key={e.recensione._id}
               >
                 <h3>{e.esame}</h3>
