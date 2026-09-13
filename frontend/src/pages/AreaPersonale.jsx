@@ -28,8 +28,8 @@ export default function AreaPersonale() {
           Ciao!
         </p>
 
-        <section>
-          <h2>Le mie recensioni</h2>
+        <section className="sezione-recensioni">
+          <h2>Le mie Recensioni</h2>
           {
             recensioni.length === 0 ? (<p>Non hai ancora recensioni inserite</p>) : (
               recensioni.map((e) => (

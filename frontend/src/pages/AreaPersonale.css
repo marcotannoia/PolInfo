@@ -47,6 +47,14 @@
   cursor: pointer;
 }
 
+.sezione-recensioni {
+  margin-top: 20px;
+}
+
+.sezione-recensioni h2 {
+  margin-bottom: 12px;
+}
+
 .recensione {
   margin-top: 12px;
   padding: 12px;
