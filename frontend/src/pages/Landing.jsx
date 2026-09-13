@@ -55,9 +55,6 @@ async function inserisciEsame(event) {
     return ( 
         <main id="home" className="landing-page">
       <section className="hero">
-        <p className="hero__eyebrow">
-          Informazioni sugli esami universitari
-        </p>
 
         <h1 className="hero__title">
           POL<span>Info</span>

@@ -6,6 +6,10 @@ const axios = require('axios'); // serve per fare chiamate http
 exports.register = async (req, res) => {
   try {
     const { email, password } = req.body; 
+    const utenteEsistente = await User.findOne({email});
+    if (utenteEsistente) { 
+      res.status(400).json({error: "Email occupata"})
+    }
     const newUser = new User({ email, password, ruolo: "user"}); // lo user non puo scegliere se essere admin
     await newUser.save();
     res.status(201).json({ messaggio: "Utente registrato" });
