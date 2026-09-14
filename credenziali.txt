@@ -1,0 +1,2 @@
+account admin : marco.tannoia@gmail.com => UtenteAdmin
+account user : maurolavigna88@gmail.com -> UtenteUser

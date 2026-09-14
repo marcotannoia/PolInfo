@@ -27,16 +27,59 @@ exports.login = async (req, res) => {
     const match_pw = await bcrypt.compare(password, user.password); 
     if (!match_pw) return res.status(400).json({ error: "Password errata" }); 
 
-    const token = jwt.sign({ id: user._id , ruolo : user.ruolo }, process.env.JWT_SECRET, { expiresIn: '3h' }); //creo il token che dura una sett, serve cookie parser per o per leggere i cookie ricevuti dal btowser, cioe la res
+    const token = jwt.sign(
+      { id: user._id, ruolo: user.ruolo },
+      process.env.JWT_SECRET,
+      { expiresIn: '15m' }
+    );
+    const refreshToken = jwt.sign(
+      { id: user._id, ruolo: user.ruolo, refresh: true },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
     res.cookie('token', token, {
-       httpOnly: true,
-       secure: true,
-       sameSite: 'none',
-       maxAge: 3 * 60 * 60 * 1000
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: 15 * 60 * 1000
+    });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: 7 * 24 * 60 * 60 * 1000
     });
     res.json({ user: { id: user._id, email: user.email } }); //risposta: id user e email | ho tolto il token, lo carico dal middleware con il cookie 
   } catch (err) {
     res.status(500).json({ error: "Errore, riprovare" });
+  }
+};
+
+exports.refresh = (req, res) => {
+  const refreshToken = req.cookies?.refreshToken;
+  if (!refreshToken) return res.status(401).json({ error: 'Refresh token mancante' });
+
+  try {
+    const user = jwt.verify(refreshToken, process.env.JWT_SECRET);
+    if (!user.refresh) {
+      return res.status(401).json({ error: 'Refresh token non valido' });
+    }
+
+    const token = jwt.sign(
+      { id: user.id, ruolo: user.ruolo },
+      process.env.JWT_SECRET,
+      { expiresIn: '15m' }
+    );
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: 15 * 60 * 1000
+    });
+
+    return res.status(200).json({ message: 'Token aggiornato' });
+  } catch (err) {
+    return res.status(401).json({ error: 'Refresh token non valido o scaduto' });
   }
 };
 
@@ -78,12 +121,9 @@ exports.cookieConenso = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-  res.clearCookie('token', { 
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none'
-  });
+  const opzioniCookie = { httpOnly: true, secure: true, sameSite: 'none' };
+  res.clearCookie('token', opzioniCookie);
+  res.clearCookie('refreshToken', opzioniCookie);
 
   return res.status(200).json({message: 'Logout effettuato'});
 };
-

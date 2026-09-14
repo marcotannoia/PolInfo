@@ -38,7 +38,14 @@ const documentazioneSwagger = {
         in: 'cookie',
         name: 'token',
         description:
-          'Cookie HTTP-only contenente il token JWT, creato automaticamente durante il login.'
+          'Cookie HTTP-only contenente l’access token valido per 15 minuti'
+      },
+      refreshCookieAuth: {
+        type: 'apiKey',
+        in: 'cookie',
+        name: 'refreshToken',
+        description:
+          'Cookie HTTP-only contenente il refresh token JWT, valido per 7 giorni.'
       }
     },
 
@@ -295,7 +302,7 @@ const documentazioneSwagger = {
         tags: ['Autenticazione'],
         summary: 'Effettua il login',
         description:
-          'Se le credenziali sono corrette il server salva il token nel cookie HTTP-only chiamato token',
+          'Se le credenziali sono corrette il server salva l’access token e il refresh token in due cookie HTTP-only.',
         requestBody: {
           required: true,
           content: {
@@ -311,10 +318,10 @@ const documentazioneSwagger = {
             description: 'Login effettuato',
             headers: {
               'Set-Cookie': {
-                description: 'Cookie contenente il token',
+                description: 'Cookie contenenti access token e refresh token',
                 schema: {
                   type: 'string',
-                  example: 'token=eyJhbGciOiJIUzI1Ni...; HttpOnly; Secure'
+                  example: 'token=eyJhbGciOiJIUzI1Ni...; refreshToken=eyJhbGciOiJIUzI1Ni...; HttpOnly; Secure'
                 }
               }
             },
@@ -339,6 +346,35 @@ const documentazioneSwagger = {
           },
           500: {
             description: 'Errore interno del server'
+          }
+        }
+      }
+    },
+
+    '/api/autenticazione/refresh': {
+      post: {
+        tags: ['Autenticazione'],
+        summary: 'Rinnova l’access token',
+        description:
+          'Verifica il refresh token salvato nel cookie e crea un nuovo access token valido per 15 minuti.',
+        security: [
+          {
+            refreshCookieAuth: []
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Access token rinnovato',
+            content: {
+              'application/json': {
+                example: {
+                  message: 'Token aggiornato'
+                }
+              }
+            }
+          },
+          401: {
+            description: 'Refresh token mancante, non valido o scaduto'
           }
         }
       }
@@ -369,11 +405,8 @@ const documentazioneSwagger = {
               }
             }
           },
-          400: {
-            description: 'Token non valido'
-          },
           401: {
-            description: 'Cookie di autenticazione assente'
+            description: 'Access token e refresh token assenti o non validi'
           }
         }
       }
@@ -425,11 +458,7 @@ const documentazioneSwagger = {
       post: {
         tags: ['Autenticazione'],
         summary: 'Effettua il logout',
-        security: [
-          {
-            cookieAuth: []
-          }
-        ],
+        description: 'Elimina sia il cookie dell’access token sia quello del refresh token.',
         responses: {
           200: {
             description: 'Logout completato',
@@ -440,12 +469,6 @@ const documentazioneSwagger = {
                 }
               }
             }
-          },
-          400: {
-            description: 'Token non valido'
-          },
-          401: {
-            description: 'Utente non autenticato'
           }
         }
       }
